@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-const firebase = require("firebase");
-// Required for side-effects
-require("firebase/firestore");
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Register from './Register';
+import { connect } from './firebase';
+var firebase = null;
 
-
-class App extends Component {
+class HomeScreen extends React.Component {
   constructor() {
     super();
-    var config = {
-      apiKey: "AIzaSyAWOozwCcy-iqA_NR1ZE6Z4hXexXgwNrWs",
-      authDomain: "ctfwriteups-dc19b.firebaseapp.com",
-      databaseURL: "https://ctfwriteups-dc19b.firebaseio.com",
-      projectId: "ctfwriteups-dc19b",
-      storageBucket: "ctfwriteups-dc19b.appspot.com",
-      messagingSenderId: "246400000913"
-    };
-
-    firebase.initializeApp(config);
+    firebase = connect();
 
     // Initialize Cloud Firestore through Firebase
     this.ref = firebase.firestore().collection('todos');
@@ -105,4 +96,24 @@ class App extends Component {
   }
 }
 
-export default App;
+const BasicExample = () => (
+  <Router>
+    <div>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
+      </ul>
+
+      <hr />
+
+      <Route exact path="/" component={HomeScreen} />
+      <Route path="/register" component={Register} />
+    </div>
+  </Router>
+);
+
+export default BasicExample;
