@@ -1,0 +1,3 @@
+# Ignore Credentials files
+web/src/firebase.json
+mobile/ios/GoogleService-Info.plist
